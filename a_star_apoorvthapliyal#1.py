@@ -372,3 +372,42 @@ while (x, y, theta) != (x_start, y_start, theta_start):
 path.append((x, y))
 path.reverse()
 
+########## STEP 5: REPRESENT THE OPTIMAL PATH ##########
+
+# Start a video writer in mp4 format
+astar = cv2.VideoWriter('astar.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 50, (width, height))
+
+# Draw the start and goal nodes on the canvas
+cv2.circle(canvas, (x_start, y_start), 10, (0, 255, 0), -1)
+cv2.circle(canvas, (x_goal, y_goal), 10, (0, 165, 255), -1)
+
+# Draw on every threshold frame
+threshold = 200
+counter = 0
+
+# Draw the visited nodes on the canvas as an arrow going from the parent to the child
+for x, y, theta in parent:
+    counter += 1
+    cv2.arrowedLine(canvas, (int(parent[(x, y, theta)][0]), int(parent[(x, y, theta)][1])), (int(x), int(y)), (255, 0, 0), 1)
+    if(counter == threshold):
+        cv2.imshow('Canvas', canvas)
+        astar.write(canvas)
+        cv2.waitKey(1)  
+        counter = 0
+
+# Draw the start and goal nodes on the canvas
+cv2.circle(canvas, (x_start, y_start), 10, (0, 255, 0), -1)
+cv2.circle(canvas, (x_goal, y_goal), 10, (0, 165, 255), -1)
+
+# Draw the path on the canvas
+for i in range(len(path)-1):
+    # Draw a red dot at path points
+    cv2.circle(canvas, (int(path[i][0]), int(path[i][1])), 1, (0, 0, 255), 3)
+    # cv2.line(canvas, (int(path[i][0]), int(path[i][1])), (int(path[i+1][0]), int(path[i+1][1])), (0, 0, 255), 2)
+    cv2.imshow('Canvas', canvas)
+    astar.write(canvas)
+
+# Release VideoWriter
+astar.release()
+cv2.waitKey(0)
+cv2.destroyAllWindows()
