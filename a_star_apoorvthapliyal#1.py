@@ -1,3 +1,5 @@
+# Link to github: https://github.com/Apoorv-1009/Astar-Path-Planner/tree/main
+
 import numpy as np
 import cv2
 import heapq
@@ -36,6 +38,8 @@ angular_threshold = 30
 height = 500
 width = 1200
 color = (0, 255, 255)
+
+# Please change this color to visualise the robot radius padding 
 radius_color = (254, 254, 254)
 
 # Make an empty canvas
