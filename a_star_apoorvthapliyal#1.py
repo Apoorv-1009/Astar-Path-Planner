@@ -18,3 +18,9 @@ while True:
         print('Invalid input, re-enter the step size')
 
 
+########## Step 1: Define the action cost set ##########
+
+# Define the cost of each action
+value = L
+action_cost_set = {(-60, value), (-30, value), (0, value), (30, value), (60, value)}
+
