@@ -17,12 +17,15 @@ while True:
     else:
         print('Invalid input, re-enter the step size')
 
+# clearance = 10
+# L = 10
 
 ########## Step 1: Define the action cost set ##########
 
 # Define the cost of each action
 value = L
 action_cost_set = {(-60, value), (-30, value), (0, value), (30, value), (60, value)}
+# action_cost_set = {(60, value), (30, L), (0, L), (-30, L), (-60, L)}
 
 ########## STEP 2: MATHEMATICAL REPRESENTATION OF FREE SPACE ##########
 
@@ -38,7 +41,7 @@ radius_color = (254, 254, 254)
 # Make an empty canvas
 canvas = np.zeros((height, width, 3), dtype=np.uint8)
 # Draw a white rectangle from (clearance, clearance) to (width-clearance, height-clearance) on the canvas for wall padding
-cv2.rectangle(canvas, (clearance, clearance), (width-clearance, height-clearance), (255, 255, 255), -1)
+cv2.rectangle(canvas, (clearance+radius, clearance+radius), (width-clearance-radius, height-clearance-radius), (255, 255, 255), -1)
 
 # OBSTACLE 1
 x1, x2 = 100-clearance-radius, 175+clearance+radius
@@ -232,8 +235,8 @@ for x in range(x1, x2):
 # Enter the start and goal nodes with bottom left as origin
 # Take input from the user, till its not in the obstacle space
 while True:
-    x_start = int(input('Enter start x position' + f'({clearance}-{width-clearance-1}): '))
-    y_start = int(input('Enter start y position' + f'({clearance}-{height-clearance-1}): '))
+    x_start = int(input('Enter start x position' + f'({clearance+radius}-{width-clearance-radius-1}): '))
+    y_start = int(input('Enter start y position' + f'({clearance+radius}-{height-clearance-radius-1}): '))
     theta_start = int(input('Enter start theta position (+180 to -180): '))
 
     y_start = height-y_start-1
@@ -246,8 +249,8 @@ while True:
         print('The start node is in the obstacle space, re-enter the goal node position')
 
 while True:
-    x_goal = int(input('Enter goal x position' + f'({clearance}-{width-clearance-1}): '))
-    y_goal = int(input('Enter goal y position' + f'({clearance}-{height-clearance-1}): '))
+    x_goal = int(input('Enter goal x position' + f'({clearance+radius}-{width-clearance-radius-1}): '))
+    y_goal = int(input('Enter goal y position' + f'({clearance+radius}-{height-clearance-radius-1}): '))
     theta_goal = int(input('Enter goal theta position (+180 to -180): '))
 
     y_goal = height-y_goal-1
@@ -261,11 +264,8 @@ while True:
 
 print("Positions accepted! Calculating path...")
         
-# x_start, y_start, theta_start = 5, 494, 0
-# x_goal, y_goal, theta_goal = 1194, 494, 0
-
-# x_start, y_start, theta_start = 5, 494, 0
-# x_goal, y_goal, theta_goal = 1194, 5, 0
+# x_start, y_start, theta_start = clearance+1, height-clearance-1, 0
+# x_goal, y_goal, theta_goal = width-clearance-1, height-clearance-1, 0
 
 # Make a lambda function to adjust the value of x to the visited space
 adjust = lambda x, threshold: int(round(x*2)/2)/threshold        
@@ -299,7 +299,7 @@ while q:
                         adjust(y, distance_threshold),
                         adjust(theta, angular_threshold))]
 
-    if dist((x, y), (x_goal, y_goal)) <= 1 and abs(theta-theta_goal) <= angular_threshold:
+    if dist((x, y), (x_goal, y_goal)) <= L//2 and abs(theta-theta_goal) <= angular_threshold:
         end = time.time()
         # Print time in minutes and seconds
         print("Time taken: ", int((end-start)/60), "minutes", int((end-start)%60), "seconds")
@@ -375,7 +375,7 @@ path.reverse()
 ########## STEP 5: REPRESENT THE OPTIMAL PATH ##########
 
 # Start a video writer in mp4 format
-astar = cv2.VideoWriter('astar.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 50, (width, height))
+astar = cv2.VideoWriter('astar1.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 50, (width, height))
 
 # Draw the start and goal nodes on the canvas
 cv2.circle(canvas, (x_start, y_start), 10, (0, 255, 0), -1)
