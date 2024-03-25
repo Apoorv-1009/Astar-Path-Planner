@@ -379,7 +379,7 @@ path.reverse()
 ########## STEP 5: REPRESENT THE OPTIMAL PATH ##########
 
 # Start a video writer in mp4 format
-astar = cv2.VideoWriter('astar1.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 50, (width, height))
+astar = cv2.VideoWriter('astar.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 50, (width, height))
 
 # Draw the start and goal nodes on the canvas
 cv2.circle(canvas, (x_start, y_start), 10, (0, 255, 0), -1)
