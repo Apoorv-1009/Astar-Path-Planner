@@ -1,5 +1,7 @@
 # Project 03: A* Path Planning
 
+![astar new test new](https://github.com/Apoorv-1009/Astar-Path-Planner/assets/57452076/bc0d2384-d7d2-4e84-bde3-01fc841c4c3f)
+
 ## Description:
 This project implements the A* search algorithm for path planning in a given environment. The program takes into account obstacles, robot clearance, and radius to find an optimal path from a start point to a goal point.
 
