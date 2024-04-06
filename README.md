@@ -1,4 +1,4 @@
-# Project 03: A* Path Planning
+# A* Path Planning
 
 ![astar new test new](https://github.com/Apoorv-1009/Astar-Path-Planner/assets/57452076/bc0d2384-d7d2-4e84-bde3-01fc841c4c3f)
 
